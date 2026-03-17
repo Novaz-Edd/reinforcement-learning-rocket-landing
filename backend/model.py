@@ -10,7 +10,7 @@ class ActorCritic(nn.Module):
     Critic: obs → state value estimate (used to compute advantage)
     """
 
-    def __init__(self, obs_dim=5, action_dim=4, hidden=128):
+    def __init__(self, obs_dim=5, action_dim=2, hidden=64):
         super().__init__()
 
         # Shared feature extractor
@@ -33,8 +33,11 @@ class ActorCritic(nn.Module):
     def _init_weights(self):
         for layer in self.modules():
             if isinstance(layer, nn.Linear):
-                nn.init.orthogonal_(layer.weight, gain=0.01)
+                nn.init.orthogonal_(layer.weight, gain=1.0)
                 nn.init.zeros_(layer.bias)
+        # Smaller gain for output heads
+        nn.init.orthogonal_(self.actor.weight, gain=0.01)
+        nn.init.orthogonal_(self.critic.weight, gain=0.01)
 
     def forward(self, x):
         features = self.shared(x)

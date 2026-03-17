@@ -7,13 +7,13 @@ class PPOAgent:
     def __init__(
         self,
         obs_dim      = 5,
-        action_dim   = 4,
-        lr           = 1e-4,
+        action_dim   = 2,
+        lr           = 3e-4,
         gamma        = 0.99,    # discount factor
         lam          = 0.95,    # GAE lambda
-        clip_eps     = 0.15,    # PPO clip range
-        epochs       = 6,       # update passes per batch
-        batch_size   = 128,
+        clip_eps     = 0.2,    # PPO clip range
+        epochs       = 10,       # update passes per batch
+        batch_size   = 64,
     ):
         self.gamma      = gamma
         self.lam        = lam

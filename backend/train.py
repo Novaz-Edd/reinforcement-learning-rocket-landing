@@ -7,10 +7,10 @@ from env   import RocketEnv
 from agent import PPOAgent
 
 # ── Hyperparameters ───────────────────────────────────────────────────────────
-MAX_EPISODES    = 3000
-STEPS_PER_UPDATE = 1024   # collect this many steps before each PPO update
-SAVE_EVERY      = 200     # save checkpoint every N episodes
-PRINT_EVERY     = 20      # print stats every N episodes
+MAX_EPISODES    = 5000
+STEPS_PER_UPDATE = 2048   # collect this many steps before each PPO update
+SAVE_EVERY      = 500     # save checkpoint every N episodes
+PRINT_EVERY     = 50      # print stats every N episodes
 
 def train():
     env   = RocketEnv()
@@ -19,13 +19,13 @@ def train():
     # Metrics
     episode_rewards  = []
     success_rate_log = []
-    recent_successes = []   # sliding window of last 100 episodes
+    recent_successes = []   # sliding window of last 100 episodes\n    landing_velocities = []  # track successful landing velocities
 
     total_steps = 0
     episode     = 0
 
     print("Starting training...\n")
-    print(f"{'Episode':>8}  {'Reward':>8}  {'Success%':>9}  {'AvgVy':>7}  {'Steps':>7}")
+    print(f"{'Episode':>8}  {'Reward':>8}  {'Success%':>9}  {'AvgLandVy':>9}  {'Steps':>7}")
     print("-" * 50)
 
     while episode < MAX_EPISODES:
