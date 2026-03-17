@@ -19,7 +19,8 @@ def train():
     # Metrics
     episode_rewards  = []
     success_rate_log = []
-    recent_successes = []   # sliding window of last 100 episodes\n    landing_velocities = []  # track successful landing velocities
+    recent_successes = []   # sliding window of last 100 episodes
+    landing_velocities = []  # track successful landing velocities
 
     total_steps = 0
     episode     = 0
@@ -64,11 +65,23 @@ def train():
 
         success_rate = np.mean(recent_successes) * 100
         success_rate_log.append(success_rate)
+        
+        # Track landing velocities for successful landings
+        if landed and hasattr(env, 'landing_vy') and env.landing_vy is not None:
+            landing_velocities.append(env.landing_vy)
 
         if episode % PRINT_EVERY == 0:
             avg_reward = np.mean(episode_rewards[-PRINT_EVERY:])
-            print(f"{episode:>8}  {avg_reward:>8.1f}  {success_rate:>8.1f}%  "
-                  f"{last_vy:>+7.2f}  {total_steps:>7}")
+            if landing_velocities:
+                recent_vys = landing_velocities[-PRINT_EVERY:] if len(landing_velocities) >= PRINT_EVERY else landing_velocities
+                if recent_vys:
+                    avg_vy = np.mean(recent_vys)
+                    landing_str = f"{avg_vy:>+8.2f}"
+                else:
+                    landing_str = "      N/A"
+            else:
+                landing_str = "      N/A"
+            print(f"{episode:>8}  {avg_reward:>8.1f}  {success_rate:>8.1f}%  {landing_str}  {total_steps:>7}")
 
         if episode % SAVE_EVERY == 0:
             models_dir = os.path.join(os.path.dirname(__file__), "..", "models")
