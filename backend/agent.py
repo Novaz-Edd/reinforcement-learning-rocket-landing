@@ -8,6 +8,7 @@ class PPOAgent:
         self,
         obs_dim      = 5,
         action_dim   = 2,
+        hidden       = 64,
         lr           = 3e-4,
         gamma        = 0.99,    # discount factor
         lam          = 0.95,    # GAE lambda
@@ -21,7 +22,7 @@ class PPOAgent:
         self.epochs     = epochs
         self.batch_size = batch_size
 
-        self.net       = ActorCritic(obs_dim, action_dim)
+        self.net       = ActorCritic(obs_dim, action_dim, hidden)
         self.optimizer = torch.optim.Adam(self.net.parameters(), lr=lr)
 
         # Storage for one rollout

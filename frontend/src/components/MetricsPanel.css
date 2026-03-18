@@ -1,0 +1,229 @@
+/* Metrics Panel Styles */
+
+.metrics-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 24px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.panel-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin: 0;
+}
+
+.header-accent {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, #8b5cf6 0%, transparent 100%);
+}
+
+.panel-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+/* Status Indicator */
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px currentColor;
+  transition: all 0.3s ease;
+}
+
+.status-text {
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #e2e8f0;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.metric-card {
+  background: rgba(100, 150, 255, 0.08);
+  border: 1px solid rgba(100, 150, 255, 0.15);
+  border-radius: 0.75rem;
+  padding: 12px;
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  background: rgba(100, 150, 255, 0.12);
+  border-color: rgba(100, 150, 255, 0.25);
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #94a3b8;
+  margin-bottom: 4px;
+}
+
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.metric-value.action {
+  font-size: 1.125rem;
+}
+
+.unit {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.flame {
+  font-size: 1.25rem;
+  margin-right: 4px;
+}
+
+.idle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(148, 163, 184, 0.5);
+  border-radius: 50%;
+  margin-right: 4px;
+}
+
+.metric-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.metric-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Stats Box */
+.stats-box {
+  background: rgba(74, 222, 128, 0.08);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  border-radius: 0.75rem;
+  padding: 12px;
+  margin-top: 8px;
+}
+
+.stats-box h3 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #86efac;
+  margin-bottom: 8px;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 0.875rem;
+  border-bottom: 1px solid rgba(74, 222, 128, 0.1);
+}
+
+.stats-row:last-child {
+  border-bottom: none;
+}
+
+.stats-label {
+  color: #94a3b8;
+}
+
+.stats-value {
+  color: #86efac;
+  font-weight: 700;
+}
+
+.success-message {
+  background: rgba(74, 222, 128, 0.15);
+  color: #86efac;
+  padding: 8px 12px;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: center;
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.crash-message {
+  background: rgba(248, 113, 113, 0.15);
+  color: #fca5a5;
+  padding: 8px 12px;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 8px;
+  text-align: center;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+/* Step Counter */
+.step-counter {
+  padding: 12px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 0.75rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #c4b5fd;
+  margin-top: auto;
+}
+
+@media (max-width: 768px) {
+  .panel-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .metric-value {
+    font-size: 1.25rem;
+  }
+}

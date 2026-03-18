@@ -55,6 +55,7 @@ class RocketEnv:
         return np.array([y_norm, vy_norm, fuel_norm, time_to_impact, throttle_needed], dtype=np.float32)
     
     def step(self, action):
+        
         """
         Execute one step of the environment.
         
@@ -65,6 +66,8 @@ class RocketEnv:
                 = -9.8 + (20.0 or 0) = 10.2 or -9.8
         This allows slowing descent but NOT flying upward.
         """
+        prev_vy = self.vy
+        
         self.step_count += 1
         
         # Apply thrust if action == 1 and fuel available
@@ -108,11 +111,12 @@ class RocketEnv:
         # Timeout: ran out of time steps
         if self.step_count >= self.MAX_STEPS:
             done = True
-            crashed = True
-            self.crashed = True
+            timeout = True
+        else:
+            timeout = False
         
         # Compute reward (SIMPLE: no shaping that can be gamed)
-        reward = self._compute_reward(landed, crashed)
+        reward = self._compute_reward(landed, crashed, timeout, prev_vy)
         
         obs = self._get_obs()
         
@@ -126,7 +130,7 @@ class RocketEnv:
         
         return obs, reward, done, info
     
-    def _compute_reward(self, landed, crashed):
+    def _compute_reward(self, landed, crashed, timeout, prev_vy):
         """
         Simple reward function - ONLY landing gives positive reward.
         
@@ -138,17 +142,26 @@ class RocketEnv:
         
         # Small time penalty every step (forces efficiency)
         reward -= 0.1
+
+        reward += max(0, -self.vy * 0.02)
+        
+        # Encourage slowing down near ground
+        if self.y < 20:  # near landing zone
+            reward += max(0, (5 - abs(self.vy)) * 0.2)
         
         # Gentle velocity penalty (too high and agent learns to fall)
-        reward -= abs(self.vy) * 0.01
+        reward += max(0, (prev_vy - self.vy) * 0.1)
         
         # LANDING: the ONLY positive reward
         if landed:
-            reward += 200.0
+            reward += 500.0
         
-        # CRASH: significant penalty
         elif crashed:
-            reward -= 50.0
+            reward -= 100.0
+            
+        # CRASH: significant penalty
+        elif timeout:
+            reward -= 100.0
         
         return reward
     

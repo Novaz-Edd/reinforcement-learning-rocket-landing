@@ -1,0 +1,11 @@
+/* SimulationCanvas Styles */
+
+.simulation-canvas {
+  display: block;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.75rem;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 600 / 700;
+  max-width: 100%;
+}
